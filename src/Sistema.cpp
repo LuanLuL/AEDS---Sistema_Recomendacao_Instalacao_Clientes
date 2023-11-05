@@ -3,7 +3,7 @@
 
 Sistema::Sistema() {
     getCSV();
-    this->grafo.create(this->mapPoste, this->mapCto);
+    this->grafo.create(&(this->mapPoste), &(this->mapCto));
 }
 
 Sistema::~Sistema() {/*...*/}
@@ -32,8 +32,8 @@ void Sistema::setGrafo(Grafo newGrafo) {
     this->grafo = newGrafo;
 }
 
-list<pair<string, float>> Sistema::separaVizinhos(string lista) {
-    list<pair<string, float>> numeros;
+vector<pair<string, float>> Sistema::separaVizinhos(string lista) {
+    vector<pair<string, float>> numeros;
     istringstream stream(lista);
     string token;
     while (getline(stream, token, ',')) {
@@ -49,8 +49,14 @@ void Sistema::getCSV(){
         cerr << "Error: File din't find\n\n";
     } else{
         string id = "", endereco = "", latitude = "", longitude = "", vizinhos = "", cto ="";
-        list<pair<string, float>> lstVizinhos;
+        vector<pair<string, float>> lstVizinhos;
+        bool primeiraLinha = true;
         while(file.good()){
+             if (primeiraLinha) {
+                primeiraLinha = false;
+                getline(file, id);
+                continue; // Pule a primeira linha
+            }
             getline(file, id, ';');
             if(id == ""){ // verifica se é a ultima linha do CSV
                 break;

@@ -1,6 +1,6 @@
 #include "Poste.hpp"
 
-Poste::Poste(string id, string endereco, list<pair<string, float>> vizinhos, float latitude, float longitude) {
+Poste::Poste(string id, string endereco, vector<pair<string, float>> vizinhos, float latitude, float longitude) {
     this->id = id;
     this->endereco = endereco;
     this->vizinhos = vizinhos;
@@ -26,11 +26,11 @@ void Poste::setEndereco(string newEndereco) {
     this->endereco = newEndereco;
 }
 
-list<pair<string, float>> Poste::getVizinhos() {
+vector<pair<string, float>> Poste::getVizinhos() {
     return this->vizinhos;
 }
 
-void Poste::setVizinhos(list<pair<string, float>> newVizinhos) {
+void Poste::setVizinhos(vector<pair<string, float>> newVizinhos) {
     this->vizinhos = newVizinhos;
 }
 

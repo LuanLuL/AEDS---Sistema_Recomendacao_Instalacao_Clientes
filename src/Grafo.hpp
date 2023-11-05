@@ -3,10 +3,11 @@
 
 #include <iostream>
 #include <cstring>
-#include <list>
+#include <vector>
+#include <queue>
 #include <cmath>
-#include <algorithm>
 #include <sstream>
+#include <cfloat>
 #include <unordered_map>
 
 #include "Poste.hpp"
@@ -16,16 +17,17 @@ using namespace std;
 
 class Grafo{
     private:
-        unordered_map<string, list<pair<string, float>>> lista;
+        unordered_map<string, vector<pair<string, float>>> lista;
     public:
         Grafo();
         ~Grafo();
         void adicionarAresta(Poste poste);
         void adicionarAresta(Cto cto);
-        void create(unordered_map <string, Poste> mapPoste, unordered_map <string, Cto> mapCto);
+        void create(unordered_map <string, Poste> *mapPoste, unordered_map <string, Cto> *mapCto);
         void calculaPesoDasArestas(unordered_map <string, Poste> *mapPoste, unordered_map <string, Cto> *mapCto);
         float calculaDistanciaEntreArestas(float x1, float y1, float x2, float y2);
         void imprimir();
+        void algoritimoDijkstra(string inicio);
 };
 
 #endif

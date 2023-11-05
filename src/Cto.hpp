@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <cstring>
-#include <list>
+#include <vector>
 
 #include "Poste.hpp"
 
@@ -15,7 +15,7 @@ class Cto: public Poste{
         int clientesAlocados;
         string *clientes;
     public:
-        Cto(string id, string endereco, list<pair<string, float>> vizinhos, float latitude, float longitude);
+        Cto(string id, string endereco, vector<pair<string, float>> vizinhos, float latitude, float longitude);
         ~Cto();
         int getCapacidade();
         bool cheio();

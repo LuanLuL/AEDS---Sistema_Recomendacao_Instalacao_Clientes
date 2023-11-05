@@ -16,19 +16,19 @@ void Grafo::adicionarAresta(Cto cto) {
     }
 }
 
-void Grafo::create(unordered_map <string, Poste> mapPoste, unordered_map <string, Cto> mapCto) {
-    calculaPesoDasArestas(&mapPoste, &mapCto);
-    for(pair<string, Poste> poste : mapPoste){
+void Grafo::create(unordered_map <string, Poste> *mapPoste, unordered_map <string, Cto> *mapCto) {
+    calculaPesoDasArestas(mapPoste, mapCto);
+    for(pair<string, Poste> poste : *mapPoste){
         adicionarAresta(poste.second);
     }
-    for(pair<string, Cto> cto : mapCto){
+    for(pair<string, Cto> cto : *mapCto){
         adicionarAresta(cto.second);
     }
 }
 
 void Grafo::calculaPesoDasArestas(unordered_map <string, Poste> *mapPoste, unordered_map <string, Cto> *mapCto) {
     for(pair<string, Poste> poste : *mapPoste){
-        list<pair<string, float>> aux;
+        vector<pair<string, float>> aux;
         for(pair<string, float> vizinho : poste.second.getVizinhos()){
             auto it = (*mapPoste).find(vizinho.first);
             if (it != (*mapPoste).end()) {
@@ -46,7 +46,7 @@ void Grafo::calculaPesoDasArestas(unordered_map <string, Poste> *mapPoste, unord
         }
     }
      for(pair<string, Cto> cto : *mapCto){
-        list<pair<string, float>> aux;
+        vector<pair<string, float>> aux;
         for(pair<string, float> vizinho : cto.second.getVizinhos()){
             auto it = (*mapCto).find(vizinho.first);
             if (it != (*mapCto).end()) {
@@ -73,11 +73,54 @@ void Grafo::imprimir() {
     cout << "\n";
     for(auto hash : this->lista){
         cout << hash.first << ": ";
-        list<pair<string, float>> lista = hash.second;
+        vector<pair<string, float>> lista = hash.second;
         for(auto aresta : lista){
-            cout << aresta.first << " - ";
+            cout << " -> " << aresta.first << " (" << aresta.second << ")";
+        }
+        cout << "\n\n";
+    }
+}
+
+void Grafo::algoritimoDijkstra(string inicio) {
+    priority_queue<pair<string, float>> fila; // vértice, distância
+    unordered_map<string, float> dist;
+    unordered_map<string, vector<string>> predecessores; // Alteração
+    for (const auto& item : this->lista) {
+        dist.insert(make_pair(item.first, FLT_MAX));
+        predecessores[item.first] = vector<string>();
+    }
+    dist[inicio] = 0.0;
+    fila.push(make_pair(inicio, 0.0));
+    while (!fila.empty()) {
+        string vertice = fila.top().first;
+        float peso = -fila.top().second;
+        fila.pop();
+        if (peso != dist[vertice]) {
+            continue;
+        }
+        for (pair<string, float> aresta : this->lista[vertice]) {
+            if (dist[aresta.first] > (dist[vertice] + aresta.second)) {
+                dist[aresta.first] = (dist[vertice] + aresta.second);
+                predecessores[aresta.first] = predecessores[vertice]; // Copie os predecessores do vértice atual
+                predecessores[aresta.first].push_back(vertice); // Adicione o vértice atual como predecessor
+                fila.push(make_pair(aresta.first, -dist[aresta.first]));
+            }
+        }
+    }
+    cout << "Menor caminho a partir do vértice " << inicio << ":\n";
+    for (const auto& pair : dist) {
+        vector<string> caminho = predecessores[pair.first];
+        while (!caminho.empty()) {
+            cout << caminho.front() << " -> ";
+            caminho.erase(caminho.begin());
+        }
+        cout << pair.first << " (";
+        if (pair.second == FLT_MAX) {
+            cout << "Infinito) ";
+        } else {
+            cout << pair.second << ") ";
         }
         cout << endl;
     }
-    cout << endl;
 }
+

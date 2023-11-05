@@ -4,8 +4,9 @@
 #include <iostream>
 #include <fstream>
 #include <unordered_map>
+#include <algorithm>
 #include <cstring>
-#include <list>
+#include <vector>
 
 #include "Poste.hpp"
 #include "Cto.hpp"
@@ -27,7 +28,7 @@ class Sistema{
         void setMapCto(unordered_map<string, Cto> newMapCto);
         Grafo getGrafo();
         void setGrafo(Grafo newGrafo);
-        list<pair<string, float>> separaVizinhos(string lista);
+        vector<pair<string, float>> separaVizinhos(string lista);
         void getCSV();
         void imprimirMapa();
 };

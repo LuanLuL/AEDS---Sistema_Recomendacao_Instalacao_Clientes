@@ -2,7 +2,7 @@
 #define __POSTE_HPP
 
 #include <iostream>
-#include <list>
+#include <vector>
 #include <cstring>
 
 using namespace std;
@@ -10,16 +10,16 @@ using namespace std;
 class Poste{
     private:
         string id, endereco;
-        list<pair<string, float>> vizinhos;
+        vector<pair<string, float>> vizinhos;
         float latitude, longitude;
     public:
-        Poste(string id, string endereco, list<pair<string, float>> vizinhos, float latitude, float longitude);
+        Poste(string id, string endereco, vector<pair<string, float>> vizinhos, float latitude, float longitude);
         ~Poste();
         string getId();
         void setId(string newId);
         string getEndereco();
-        list<pair<string, float>> getVizinhos();
-        void setVizinhos(list<pair<string, float>> newVizinhos);
+        vector<pair<string, float>> getVizinhos();
+        void setVizinhos(vector<pair<string, float>> newVizinhos);
         void setEndereco(string newEndereco);
         float getLatitude();
         void setLatitude(float newLatitude);
