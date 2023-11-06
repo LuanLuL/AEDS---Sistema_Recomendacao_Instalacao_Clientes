@@ -1,6 +1,5 @@
 #include "Sistema.hpp"
 
-
 Sistema::Sistema() {
     getCSV();
     this->grafo.create(&(this->mapPoste), &(this->mapCto));
@@ -81,10 +80,66 @@ void Sistema::getCSV(){
 }
 
 void Sistema::imprimirMapa(){
-    for(pair<string, Poste> poste : this->mapPoste){
-        cout << poste.second.getId() << "; " << poste.second.getEndereco() << "; " << poste.second.getLatitude() << "; " << poste.second.getLongitude() << "; " << "\n\n"; 
-    }
-    for(pair<string, Cto> cto : this->mapCto){
-        cout << cto.second.getId() << "; " << cto.second.getEndereco() << "; " << cto.second.getLatitude() << "; " << cto.second.getLongitude() << "; " << "\n\n"; 
+    cout << "\nPostes alocados no sitema: \n\n";
+    for(int i = 1; i <= (this->mapPoste.size() + this->mapCto.size()); i++){
+        cout << i << " - "; 
+        auto it = this->mapPoste.find(to_string(i));
+        if(it != mapPoste.end()){
+            cout << it->second.getEndereco() << "\n\n";
+        } else{
+            auto iterator = this->mapCto.find(to_string(i));
+            if(iterator != this->mapCto.end()){
+                cout << iterator->second.getEndereco() << "\n\n";
+            }
+        }
     }
 }
+
+// void Sistema::recomendar(string identificador) {
+//     pair<unordered_map<string, float>, unordered_map<string, vector<string>>> resultados = this->grafo.algoritimoDijkstra(identificador);
+//     string way;
+//     set<pair<string, float>> fila;
+//     for (const auto& pair : resultados.first) {
+//         auto it = this->mapCto.find(pair.first);
+//         if(it != this->mapCto.end()){
+//             way = "";
+//             if (pair.second == FLT_MAX) {
+//                 way += "Caminho não encontrado";
+//             } else {
+//                 vector<string> caminho = resultados.second[pair.first];
+//                 while (!caminho.empty()) {
+//                     way += caminho.front() + " -> ";
+//                     caminho.erase(caminho.begin());
+//                 }
+//                 way += pair.first;
+//                 fila.insert(make_pair(way, pair.second));
+//                 cout << way << "(" << pair.second << ")" << endl;
+//             }
+//         }
+//     }
+//     // char instalar;
+//     // while(!fila.empty()){
+//     //     way = fila.top().first;
+//     //     float peso = fila.top().second;
+//     //     fila.pop();
+//     //     cout << "CTO mais próxima a '" << peso << "'";
+//     //     cout << "\n\n Deseja instalar o cliente? [S/N] ";
+//     //     cin >> instalar;
+//     //     switch (instalar) {
+//     //         case 'S':
+//     //         case 's': {
+//     //             cout << "\n\ninstalou\n\n";
+//     //             break;
+//     //         }
+//     //         case 'N': 
+//     //         case 'n': {
+//     //             cout << "\n\nnao instalou\n\n";
+//     //             break;
+//     //         }
+//     //         default:{
+//     //             break;
+//     //         }  
+//     //     }
+//     // }
+
+// }

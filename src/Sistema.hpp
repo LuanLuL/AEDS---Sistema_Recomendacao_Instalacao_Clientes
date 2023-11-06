@@ -2,6 +2,7 @@
 #define __SISTEMA_HPP
 
 #include <iostream>
+#include <set>
 #include <fstream>
 #include <unordered_map>
 #include <algorithm>
@@ -31,6 +32,7 @@ class Sistema{
         vector<pair<string, float>> separaVizinhos(string lista);
         void getCSV();
         void imprimirMapa();
+        void recomendar(string identificador);
 };
 
 #endif

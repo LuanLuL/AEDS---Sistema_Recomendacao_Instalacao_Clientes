@@ -81,7 +81,7 @@ void Grafo::imprimir() {
     }
 }
 
-void Grafo::algoritimoDijkstra(string inicio) {
+pair<unordered_map<string, float>, unordered_map<string, vector<string>>> Grafo::algoritimoDijkstra(string inicio) {
     priority_queue<pair<string, float>> fila; // vértice, distância
     unordered_map<string, float> dist;
     unordered_map<string, vector<string>> predecessores; // Alteração
@@ -107,20 +107,6 @@ void Grafo::algoritimoDijkstra(string inicio) {
             }
         }
     }
-    cout << "Menor caminho a partir do vértice " << inicio << ":\n";
-    for (const auto& pair : dist) {
-        vector<string> caminho = predecessores[pair.first];
-        while (!caminho.empty()) {
-            cout << caminho.front() << " -> ";
-            caminho.erase(caminho.begin());
-        }
-        cout << pair.first << " (";
-        if (pair.second == FLT_MAX) {
-            cout << "Infinito) ";
-        } else {
-            cout << pair.second << ") ";
-        }
-        cout << endl;
-    }
+    return make_pair(dist, predecessores);
 }
 
