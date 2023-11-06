@@ -11,6 +11,11 @@ s
 Criar a função recomendar.
 Maior problema é armazenar os dados corretamente.
 
+mudar o retorno da função algoritimoDijkstra -> retornar pair<pair<string, sting>, float> 
+1° string -> id
+2° string -> caminho
+float -> peso total
+
 */
 
 
