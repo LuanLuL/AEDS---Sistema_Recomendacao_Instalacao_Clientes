@@ -95,51 +95,62 @@ void Sistema::imprimirMapa(){
     }
 }
 
-// void Sistema::recomendar(string identificador) {
-//     pair<unordered_map<string, float>, unordered_map<string, vector<string>>> resultados = this->grafo.algoritimoDijkstra(identificador);
-//     string way;
-//     set<pair<string, float>> fila;
-//     for (const auto& pair : resultados.first) {
-//         auto it = this->mapCto.find(pair.first);
-//         if(it != this->mapCto.end()){
-//             way = "";
-//             if (pair.second == FLT_MAX) {
-//                 way += "Caminho não encontrado";
-//             } else {
-//                 vector<string> caminho = resultados.second[pair.first];
-//                 while (!caminho.empty()) {
-//                     way += caminho.front() + " -> ";
-//                     caminho.erase(caminho.begin());
-//                 }
-//                 way += pair.first;
-//                 fila.insert(make_pair(way, pair.second));
-//                 cout << way << "(" << pair.second << ")" << endl;
-//             }
-//         }
-//     }
-//     // char instalar;
-//     // while(!fila.empty()){
-//     //     way = fila.top().first;
-//     //     float peso = fila.top().second;
-//     //     fila.pop();
-//     //     cout << "CTO mais próxima a '" << peso << "'";
-//     //     cout << "\n\n Deseja instalar o cliente? [S/N] ";
-//     //     cin >> instalar;
-//     //     switch (instalar) {
-//     //         case 'S':
-//     //         case 's': {
-//     //             cout << "\n\ninstalou\n\n";
-//     //             break;
-//     //         }
-//     //         case 'N': 
-//     //         case 'n': {
-//     //             cout << "\n\nnao instalou\n\n";
-//     //             break;
-//     //         }
-//     //         default:{
-//     //             break;
-//     //         }  
-//     //     }
-//     // }
+void Sistema::selectionSort(vector<pair<pair<string, string>, float>> &vec) {
+    int n = vec.size();
+    for (int i = 0; i < n - 1; i++) {
+        int min_index = i;
+        for (int j = i + 1; j < n; j++) {
+            if (vec[j].second < vec[min_index].second) {
+                min_index = j;
+            }
+        }
+        if (min_index != i) {
+            swap(vec[i], vec[min_index]);
+        }
+    }
+}
 
-// }
+void Sistema::recomendar(string identificador) {
+    vector<pair<pair<string, string>, float>>  resultadosGerais = this->grafo.algoritimoDijkstra(identificador);
+    vector<pair<pair<string, string>, float>> resultadosParciais;
+    for(pair<pair<string, string>, float> item : resultadosGerais){
+        auto it = this->mapCto.find(item.first.first);
+        if(it != this->mapCto.end()){
+            resultadosParciais.push_back(item);
+        }
+    }
+    resultadosGerais.clear();
+    selectionSort(resultadosParciais);
+    char instalar = 'S';
+    while(!resultadosParciais.empty() && (instalar != 'n' && instalar != 'N')){
+        auto it = this->mapCto.find(resultadosParciais[0].first.first);
+        if(it != this->mapCto.end()){
+            Cto local = it->second;
+            if(local.cheio()){
+                
+            }
+            cout << "\n-----------------------------------------------------------------\n\nCliente deve ser instalado na CTO: '" <<local.getId()  << "'";
+            cout << "\n\nDeseja instalar o cliente? [S/N] ";
+            cin >> instalar;
+            switch (instalar) {
+                case 'S':
+                case 's': {
+                    cout << "\n----->Cliente instalado com sucesso.\n";
+                    break;
+                }
+                case 'N': 
+                case 'n': {
+                    cout << endl;
+                    break;
+                }
+                default:{
+                    cout << "\nERRO...OPÇÃO INVÁLIDA...ERRO\n";
+                    break;
+                }  
+            }
+        }else{
+            cout << "\n../Sistema::recomendar(string identificador) -> ERRO: CTO não encontrada \n";
+            break;
+        }
+    }
+}

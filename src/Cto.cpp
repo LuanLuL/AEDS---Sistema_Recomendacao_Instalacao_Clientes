@@ -12,11 +12,16 @@ int Cto::getCapacidade() {
 }
 
 bool Cto::cheio() {
-    return (this->clientesAlocados == this->capacidade-1);
+    return (this->clientesAlocados == this->capacidade);
 }
 
 void Cto::armazenarCliente(string contrato) {
     if(this->clientesAlocados < this->capacidade){
         this->clientes[this->clientesAlocados] = contrato;
-    };
+        this->clientesAlocados++;
+        cout << "Armazenou" << endl;
+    }
+    else{
+        cout << "Nao armazenou" << endl;
+    }
 }

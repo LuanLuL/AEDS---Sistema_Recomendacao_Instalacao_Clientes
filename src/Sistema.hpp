@@ -32,6 +32,7 @@ class Sistema{
         vector<pair<string, float>> separaVizinhos(string lista);
         void getCSV();
         void imprimirMapa();
+        void selectionSort(vector<pair<pair<string, string>, float>> &vec);
         void recomendar(string identificador);
 };
 

@@ -27,7 +27,7 @@ class Grafo{
         void calculaPesoDasArestas(unordered_map <string, Poste> *mapPoste, unordered_map <string, Cto> *mapCto);
         float calculaDistanciaEntreArestas(float x1, float y1, float x2, float y2);
         void imprimir();
-        pair<unordered_map<string, float>, unordered_map<string, vector<string>>> algoritimoDijkstra(string inicio);
+        vector<pair<pair<string, string>, float>> algoritimoDijkstra(string inicio);
 };
 
 #endif
