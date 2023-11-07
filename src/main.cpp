@@ -16,6 +16,7 @@ int main() {
         switch (op){
             case 1: {
                 app.imprimirMapa();
+                cout << "-----------------------------------------------------------------\n";
                 break;
             }
             case 2: {
@@ -23,17 +24,19 @@ int main() {
                 cout << "\nQual poste o cliente foi lançado? ";
                 cin >> identificador;
                 app.recomendar(identificador);
+                cout << "\n-----------------------------------------------------------------\n";
                 break;
             }
             case 3: {
-                cout << "\nSaindo do sistema...\n\n";
+                cout << "\nSaindo do sistema...\n";
+                cout << "\n-----------------------------------------------------------------\n";
                 break;
             }
             default: {
-                cout << "\nERRO...OPÇÃO INVÁLIDA...ERRO\n\n";
+                cout << "\nERRO...OPÇÃO INVÁLIDA...ERRO\n";
+                cout << "\n-----------------------------------------------------------------\n";
                 break;
             }
         }
-        cout << "-----------------------------------------------------------------\n";
     }while(op != 3);
 }

@@ -121,32 +121,36 @@ void Sistema::recomendar(string identificador) {
     }
     resultadosGerais.clear();
     selectionSort(resultadosParciais);
-    char instalar = 'S';
-    while(!resultadosParciais.empty() && (instalar != 'n' && instalar != 'N')){
+    bool continuar = true;
+    while(!resultadosParciais.empty() && continuar){
         auto it = this->mapCto.find(resultadosParciais[0].first.first);
-        if(it != this->mapCto.end()){
-            Cto local = it->second;
-            if(local.cheio()){
-                
-            }
-            cout << "\n-----------------------------------------------------------------\n\nCliente deve ser instalado na CTO: '" <<local.getId()  << "'";
-            cout << "\n\nDeseja instalar o cliente? [S/N] ";
-            cin >> instalar;
-            switch (instalar) {
-                case 'S':
-                case 's': {
-                    cout << "\n----->Cliente instalado com sucesso.\n";
-                    break;
+        if(it != this->mapCto.end()){        
+            if(it->second.cheio()){
+                resultadosParciais.erase(resultadosParciais.begin());
+            } else{
+                cout << "\n-----------------------------------------------------------------\n\nCliente deve ser instalado na CTO: '" << it->second.getId()  << "'";
+                cout << "\n\nDeseja instalar o cliente? [S/N] ";
+                char instalar = 'S';
+                cin >> instalar;
+                switch (instalar) {
+                    case 'S':
+                    case 's': {
+                        it->second.armazenarCliente();
+                        continuar = false;
+                        cout << "\nSiga o menor caminho:\n\n\t" << resultadosParciais[0].first.second << "\n";
+                        break;
+                    }
+                    case 'N': 
+                    case 'n': {
+                        continuar = false;
+                        cout << endl;
+                        break;
+                    }
+                    default:{
+                        cout << "\nERRO...OPÇÃO INVÁLIDA...ERRO\n";
+                        break;
+                    }  
                 }
-                case 'N': 
-                case 'n': {
-                    cout << endl;
-                    break;
-                }
-                default:{
-                    cout << "\nERRO...OPÇÃO INVÁLIDA...ERRO\n";
-                    break;
-                }  
             }
         }else{
             cout << "\n../Sistema::recomendar(string identificador) -> ERRO: CTO não encontrada \n";
