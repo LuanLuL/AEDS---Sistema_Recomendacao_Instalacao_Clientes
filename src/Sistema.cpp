@@ -3,6 +3,7 @@
 Sistema::Sistema() {
     getCSV();
     this->grafo.create(&(this->mapPoste), &(this->mapCto));
+    this->quantidadeDeElementos = this->mapPoste.size() + this->mapCto.size();
 }
 
 Sistema::~Sistema() {/*...*/}
@@ -29,6 +30,14 @@ Grafo Sistema::getGrafo() {
 
 void Sistema::setGrafo(Grafo newGrafo) {
     this->grafo = newGrafo;
+}
+
+int Sistema::getQuantidadeDeElementos() {
+    return this->quantidadeDeElementos;
+}
+
+void Sistema::setQuantidadeDeElementos(int newQuantidadeDeElementos) {
+    this->quantidadeDeElementos = newQuantidadeDeElementos;
 }
 
 vector<pair<string, float>> Sistema::separaVizinhos(string lista) {
@@ -111,50 +120,55 @@ void Sistema::selectionSort(vector<pair<pair<string, string>, float>> &vec) {
 }
 
 void Sistema::recomendar(string identificador) {
-    vector<pair<pair<string, string>, float>>  resultadosGerais = this->grafo.algoritimoDijkstra(identificador);
-    vector<pair<pair<string, string>, float>> resultadosParciais;
-    for(pair<pair<string, string>, float> item : resultadosGerais){
-        auto it = this->mapCto.find(item.first.first);
-        if(it != this->mapCto.end()){
-            resultadosParciais.push_back(item);
-        }
+    if(stoi(identificador) > this->quantidadeDeElementos || stoi(identificador) < 1){
+        cout << "\nERRO...POSTE NÃO ENCONTRADO...ERRO\n";
     }
-    resultadosGerais.clear();
-    selectionSort(resultadosParciais);
-    bool continuar = true;
-    while(!resultadosParciais.empty() && continuar){
-        auto it = this->mapCto.find(resultadosParciais[0].first.first);
-        if(it != this->mapCto.end()){        
-            if(it->second.cheio()){
-                resultadosParciais.erase(resultadosParciais.begin());
-            } else{
-                cout << "\n-----------------------------------------------------------------\n\nCliente deve ser instalado na CTO: '" << it->second.getId()  << "'";
-                cout << "\n\nDeseja instalar o cliente? [S/N] ";
-                char instalar = 'S';
-                cin >> instalar;
-                switch (instalar) {
-                    case 'S':
-                    case 's': {
-                        it->second.armazenarCliente();
-                        continuar = false;
-                        cout << "\nSiga o menor caminho:\n\n\t" << resultadosParciais[0].first.second << "\n";
-                        break;
-                    }
-                    case 'N': 
-                    case 'n': {
-                        continuar = false;
-                        cout << endl;
-                        break;
-                    }
-                    default:{
-                        cout << "\nERRO...OPÇÃO INVÁLIDA...ERRO\n";
-                        break;
-                    }  
-                }
+    else{
+        vector<pair<pair<string, string>, float>>  resultadosGerais = this->grafo.algoritimoDijkstra(identificador);
+        vector<pair<pair<string, string>, float>> resultadosParciais;
+        for(pair<pair<string, string>, float> item : resultadosGerais){
+            auto it = this->mapCto.find(item.first.first);
+            if(it != this->mapCto.end()){
+                resultadosParciais.push_back(item);
             }
-        }else{
-            cout << "\n../Sistema::recomendar(string identificador) -> ERRO: CTO não encontrada \n";
-            break;
+        }
+        resultadosGerais.clear();
+        selectionSort(resultadosParciais);
+        bool continuar = true;
+        while(!resultadosParciais.empty() && continuar){
+            auto it = this->mapCto.find(resultadosParciais[0].first.first);
+            if(it != this->mapCto.end()){        
+                if(it->second.cheio()){
+                    resultadosParciais.erase(resultadosParciais.begin());
+                } else{
+                    cout << "\n-----------------------------------------------------------------\n\nCliente deve ser instalado na CTO: '" << it->second.getId()  << "'";
+                    cout << "\n\nDeseja instalar o cliente? [S/N] ";
+                    char instalar = 'S';
+                    cin >> instalar;
+                    switch (instalar) {
+                        case 'S':
+                        case 's': {
+                            it->second.armazenarCliente();
+                            continuar = false;
+                            cout << "\nSiga o menor caminho:\n\n\t" << resultadosParciais[0].first.second << "\n";
+                            break;
+                        }
+                        case 'N': 
+                        case 'n': {
+                            continuar = false;
+                            cout << endl;
+                            break;
+                        }
+                        default:{
+                            cout << "\nERRO...OPÇÃO INVÁLIDA...ERRO\n";
+                            break;
+                        }  
+                    }
+                }
+            }else{
+                cout << "\n../Sistema::recomendar(string identificador) -> ERRO: CTO não encontrada \n";
+                break;
+            }
         }
     }
 }

@@ -20,6 +20,7 @@ class Sistema{
         unordered_map<string, Poste> mapPoste; 
         unordered_map<string, Cto> mapCto;
         Grafo grafo;
+        int quantidadeDeElementos;
     public:
         Sistema();
         ~Sistema();
@@ -29,6 +30,8 @@ class Sistema{
         void setMapCto(unordered_map<string, Cto> newMapCto);
         Grafo getGrafo();
         void setGrafo(Grafo newGrafo);
+        int getQuantidadeDeElementos();
+        void setQuantidadeDeElementos(int newQuantidadeElementos);
         vector<pair<string, float>> separaVizinhos(string lista);
         void getCSV();
         void imprimirMapa();
