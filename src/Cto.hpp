@@ -11,7 +11,7 @@ using namespace std;
 
 class Cto: public Poste{
     private:
-        const static int capacidade = 3;
+        const static int capacidade = 2;
         int qtdClientes;
         bool *clientes;
     public:
