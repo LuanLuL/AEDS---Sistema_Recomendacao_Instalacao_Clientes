@@ -6,14 +6,34 @@ Grafo::~Grafo(){/*...*/}
 
 void Grafo::adicionarAresta(Poste poste){
     for(pair<string, float> vizinho : poste.getVizinhos()){
-        this->lista[poste.getId()].push_back(make_pair(vizinho.first, vizinho.second));
+        auto itToVertice = this->lista.find(vizinho.first);
+        if(itToVertice != this->lista.end()){
+            for(auto aresta: itToVertice->second){
+                if(aresta.first == poste.getId()){
+                    this->lista[poste.getId()].push_back(make_pair(vizinho.first, aresta.second));
+                    break;
+                }
+            }
+        }else{
+            this->lista[poste.getId()].push_back(make_pair(vizinho.first, vizinho.second));
+        }
     }
 }
 
 void Grafo::adicionarAresta(Cto cto) {
     for(pair<string, float> vizinho : cto.getVizinhos()){
-        this->lista[cto.getId()].push_back(make_pair(vizinho.first, vizinho.second));
-    }
+        auto itToVertice = this->lista.find(vizinho.first);
+        if(itToVertice != this->lista.end()){
+            for(auto aresta: itToVertice->second){
+                if(aresta.first == cto.getId()){
+                    this->lista[cto.getId()].push_back(make_pair(vizinho.first, aresta.second));
+                    break;
+                }
+            }
+        }else{
+            this->lista[cto.getId()].push_back(make_pair(vizinho.first, vizinho.second));
+        }
+    }  
 }
 
 void Grafo::create(unordered_map <string, Poste> *mapPoste, unordered_map <string, Cto> *mapCto) {
@@ -56,7 +76,7 @@ void Grafo::calculaPesoDasArestas(unordered_map <string, Poste> *mapPoste, unord
                 if(iterator != (*mapPoste).end()){
                     aux.push_back(make_pair(vizinho.first, calculaDistanciaEntreArestas(iterator->second.getLatitude(), iterator->second.getLongitude(), cto.second.getLatitude(), cto.second.getLongitude())));
                 }
-            }
+            } 
         }
         auto it = (*mapCto).find(cto.first);
         if (it != (*mapCto).end()) {
@@ -121,7 +141,6 @@ vector<pair<pair<string, string>, float>> Grafo::algoritimoDijkstra(string inici
             }
             way += pair.first;
             returnDados.push_back(make_pair(make_pair(pair.first, way), pair.second));
-            // cout << way << "(" << pair.second << ")" << endl;
         }
     }
     return returnDados;

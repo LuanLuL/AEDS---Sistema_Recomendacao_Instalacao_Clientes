@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <algorithm>
 #include <vector>
 #include <queue>
 #include <cmath>
