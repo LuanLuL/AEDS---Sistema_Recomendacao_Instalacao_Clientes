@@ -4,7 +4,7 @@
         Criado em novembro de 2023, o projeto de<strong> Sistema de Recomendação de Alocação de Clientes em Redes de Computadores</strong> foi desenvolvido em virtude de atender as demandas do curso de Algoritimo e Estrutura de Dados, ministrado pelo professor <a href="https://www.linkedin.com/in/michelpiressilva/?originalSubdomain=br" target="_blank">Michel Pires Da Silva</a> no Centro Federal de Educação Tecnológica de Minas Gerais (<a href="https://www.divinopolis.cefetmg.br/" target="_blank">CEFET-MG</a>).
     </p>
     <p>
-        <a href="https://github.com/LuanLuL/Instalacao_Clientes/blob/main/documentation/Trabalho_Final_AEDS.pdf" target="_blank">[Acesse a documentação [AQUI]]</a>
+        <a href="https://github.com/LuanLuL/Instalacao_Clientes/blob/main/documentation/Trabalho_Final_AEDS.pdf" target="_blank">Acesse a documentação [AQUI]</a>
     </p>
 </section>
 </section>
